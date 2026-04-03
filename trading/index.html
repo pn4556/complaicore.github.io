@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>AI Trading Portal — ComplAiCore</title>
+    <script>
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            location.href = 'https://' + location.hostname + location.pathname + location.search;
+        }
+    </script>
+    <meta name="description" content="AI-powered trading analysis and paper trading platform. Smart trading ideas powered by algorithmic analysis.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --bg-secondary: #1e293b;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --card-bg: #1e293b;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 1.25rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo {
+            font-size: 1.5rem; font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a.active { color: var(--accent); }
+        .nav-cta {
+            background: var(--accent);
+            color: white; padding: 0.75rem 1.5rem; border-radius: 8px;
+            text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--accent-glow); }
+
+        /* Main Content */
+        main {
+            padding-top: 6rem;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 5%;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem;
+            color: var(--accent); margin-bottom: 1.5rem;
+        }
+        .badge::before {
+            content: ''; width: 8px; height: 8px; background: var(--accent);
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .feature-icon {
+            width: 48px; height: 48px;
+            background: var(--accent-glow);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 5%;
+            text-align: center;
+        }
+        .cta-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cta-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .cta-card p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--accent-glow);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .stat h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .stat p {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links li:not(:last-child) { display: none; }
+            .features { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Coming Soon Overlay */
+        .coming-soon {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .coming-soon.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .coming-soon-content {
+            text-align: center;
+            padding: 3rem;
+        }
+        .coming-soon h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .coming-soon p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        .close-btn {
+            position: absolute;
+            top: 2rem; right: 2rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">ComplAi<span>Core</span></a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/trading" class="active">Trading</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="mailto:PN@complaicore.com" class="nav-cta">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="badge">🚀 AI-Powered Trading</div>
+            <h1>Let AI Find Your Next Trade</h1>
+            <p>Smart trading ideas powered by algorithmic analysis. No opinions, just data-driven insights. Practice with $10,000 virtual money.</p>
+        </section>
+
+        <section class="stats">
+            <div class="stat">
+                <h3>42</h3>
+                <p>Assets Tracked</p>
+            </div>
+            <div class="stat">
+                <h3>67%</h3>
+                <p>Accuracy Rate</p>
+            </div>
+            <div class="stat">
+                <h3>15m</h3>
+                <p>Update Interval</p>
+            </div>
+            <div class="stat">
+                <h3>12+</h3>
+                <p>Indicators</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Top 10 Daily Picks</h3>
+                <p>Algorithmically ranked trading setups updated every 15 minutes. Filter by confidence, sector, and asset type.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>AI Scoring</h3>
+                <p>Multi-factor analysis with probability distribution. Know when to buy, sell, or hold with confidence scores.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Paper Trading</h3>
+                <p>Practice trading with $10,000 virtual money. Test strategies risk-free before going live.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Technical Analysis</h3>
+                <p>12+ indicators including RSI, MACD, Bollinger Bands, and custom multi-timeframe signals.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Watchlist</h3>
+                <p>Track your favorite stocks and cryptocurrencies. Get alerts when scores change significantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Ready</h3>
+                <p>Access your trading dashboard from any device. Optimized for desktop, tablet, and mobile.</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-card">
+                <h2>Ready to Start Trading Smarter?</h2>
+                <p>Access the ComplAiCore Trading Portal with AI-powered analysis, paper trading, and real-time market insights.</p>
+                <div class="cta-buttons">
+                    <a href="https://chartwise-ai.vercel.app" class="btn-primary">
+                        <span>Launch Trading Portal</span>
+                        <span>→</span>
+                    </a>
+                    <a href="mailto:PN@complaicore.com" class="btn-secondary">Request Access</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 ComplAiCore LLC. All rights reserved. Built with AI for smarter trading.</p>
+    </footer>
+
+    <script>
+        // Check if we should show coming soon or redirect to actual app
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('app')) {
+            // Redirect to deployed Chartwise app
+            window.location.href = 'https://chartwise-ai.vercel.app';
+        }
+    </script>
+</body>
+</html>
