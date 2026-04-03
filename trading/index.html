@@ -242,46 +242,6 @@
             .features { grid-template-columns: 1fr; }
             .stats { grid-template-columns: repeat(2, 1fr); }
         }
-
-        /* Coming Soon Overlay */
-        .coming-soon {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        .coming-soon.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .coming-soon-content {
-            text-align: center;
-            padding: 3rem;
-        }
-        .coming-soon h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .coming-soon p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-        .close-btn {
-            position: absolute;
-            top: 2rem; right: 2rem;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -356,14 +316,14 @@
 
         <section class="cta-section">
             <div class="cta-card">
-                <h2>Ready to Start Trading Smarter?</h2>
-                <p>Access the ComplAiCore Trading Portal with AI-powered analysis, paper trading, and real-time market insights.</p>
+                <h2>🚧 Coming Soon</h2>
+                <p>The ComplAiCore Trading Portal is currently being prepared for deployment. Check back shortly or contact us for early access.</p>
                 <div class="cta-buttons">
-                    <a href="https://chartwise-ai.vercel.app" class="btn-primary">
-                        <span>Launch Trading Portal</span>
+                    <a href="mailto:PN@complaicore.com?subject=Trading Portal Early Access" class="btn-primary">
+                        <span>Request Early Access</span>
                         <span>→</span>
                     </a>
-                    <a href="mailto:PN@complaicore.com" class="btn-secondary">Request Access</a>
+                    <a href="/" class="btn-secondary">Back to Home</a>
                 </div>
             </div>
         </section>
@@ -372,14 +332,5 @@
     <footer>
         <p>© 2026 ComplAiCore LLC. All rights reserved. Built with AI for smarter trading.</p>
     </footer>
-
-    <script>
-        // Check if we should show coming soon or redirect to actual app
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('app')) {
-            // Redirect to deployed Chartwise app
-            window.location.href = 'https://chartwise-ai.vercel.app';
-        }
-    </script>
 </body>
 </html>
